@@ -23,7 +23,10 @@ npm start
 
 ## Testing: 
 
-
+## Screenshot
+![image](C:\bootcamp\W13\homework\E-Commerce\Assets\Capture.JPG)
+## Walkthrough Video link
+(https://drive.google.com/file/d/1zJMBQoALNluvXzBsgse5hK4ET22SCSrG/view)
 ## Questions: 
 Any questions, comments, or concerns, please feel free to contact me at:
 * Github: (https://github.com/mknauss97)
