@@ -6,18 +6,17 @@ const { Category, Product } = require('../../models');
 router.get('/', (req, res) => {
   // find all categories
   // be sure to include its associated Products
-  Category.findAll({
-    attributes: ['id', 'catefory_name'],
-    include: [
-      {
+  Category.findAll(
+    {
+      include: {
         model: Product,
         attributes: ['id', 'product_name', 'price', 'stock', 'category_id']
       }
-    ]
-  })
-    .then(dbCategoryData => res.json(dbCategoryData))
+    }
+  )
+
+    .then(categoryData => res.json(categoryData))
     .catch(err => {
-      console.log(err);
       res.status(500).json(err);
     });
 });
@@ -29,27 +28,18 @@ router.get('/:id', (req, res) => {
     where: {
       id: req.params.id
     },
-    attributes: ['id', 'category_name'],
-    include: [
-      {
-        model: Product,
-        attributes: ['id', 'product_name', 'price', 'stock', 'category_id']
-      }
-    ]
-  })
-    .then(dbCategoryData => {
-      if (!dbCategoryData) {
-        res.status(404).json({ message: 'Category not found with ID' });
-        return;
-      }
-      res.json(dbCategoryData);
-    })
-    .catch(err => {
-      console.log(err);
-      res.status(500).json(err);
-    })
-});
+    include: {
+      model: Product,
+      attributes: ['category_id']
+    }
 
+  })
+    .then(categoryData => res.json(categoryData))
+    .catch(err => {
+      res.status(500).json(err);
+    });
+
+});
 router.post('/', (req, res) => {
   // create a new category
   Category.create({
@@ -71,7 +61,7 @@ router.put('/:id', (req, res) => {
   })
     .then(dbCategoryData => {
       if (!dbCategoryData[0]) {
-        res.status(404).json({ message: 'Catefory not found with ID' });
+        res.status(404).json({ message: 'Category not found with ID' });
         return;
       }
       res.json(dbCategoryData);
